@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <title>Bezier Curves</title>
+
+        <link rel="stylesheet" href="Bezier_Style.css">
+		<meta http-equiv=”Content-Type” content=”text/html; charset=utf-8″>
+        <script type="text/javascript" async
+                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async>
+        </script>
+		<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    </head>
+
+    <body>
+        <div id="geral">
+            <div id="cabecalho">
+                <h1>Introdução à Computa&ccedil;&atilde;o Gr&aacute;fica</h1>
+                <h2>Tema: Curvas de Bézier</h2>
+                <h3>Aluno: At&iacute;lio Leit&atilde;o Pellegrino</h3>
+            </div>
+
+            <div id="secoes">
+                <h2>Introdu&ccedil;&atilde;o</h2>
+            </div>
+            <div id="textos">
+                <p> As curvas de B&eacute;zier recebem este nome devido a Pierre B&eacute;zier, engenheiro da montadora
+                     Renault, que, na década de 1960, desenvolveu uma curva intuitiva e prática, para que
+                     desiners e artistas pudessem utiliza-las sem necessidade de conhecimentos avançados em Matemática.
+                </p>
+                <p>As curvas de B&eacute;zier podem oferecer aproximações muito boas para diversas curvas ou funções, dependendo da quantidade de pontos de controle que passemos.</p>
+            </div>
+
+            <div id="secoes">
+                <h2>Defini&ccedil;&otilde;es e Conceitos</h2>
+            </div>
+            <div id="textos">
+                <p>Agora apresentaremos parte do ferramental matemático que está por traz das curvas de B&eacute;zier.</p>
+                <div id="secoes">
+                    <h3>Polinômio de Bernstain</h3>
+                
+    				<p>Assim, defini-se o \(j\)-&eacute;simo polinômio de Bernstein de grau \(n\) como:
+                        
+    					\[ \mathbb{\beta_{\space j , \space n}} = \space {n \choose j} \space t^j \space (1-t)^{n-j} \] </p>
+				
+	    			<p>Caso \(P(x)\) seja um polinômio de grau menor ou igual a \(n\), poderemos representa-lo por:</p>
+				
+		    			\[ P(x)  = \sum_{j=0}^{n} \space f_j \space {n \choose j} \space t^j \space (1-t)^{n-j} = \sum_{j=0}^{n} f_j \space \mathbb{\beta_{\space j , \space n}}\]	
+				
+			    	<p>já que \(\{\mathbb{\beta_{\space j , \space n}}\}_{j=0}^n\) nos fornece uma base para o espaço vetorial dos polinômios
+				        de grau menor ou igual que \( n \).</p>
+                </div>
+                
+                <div id="secoes">
+                    <h3>Curva de B&eacute;zier de grau \( n \)</h3>
+                    <p>Restringindo nosso \( t \) ao intervalo \( [0,1] \), a equação de uma curva de Bézier de grau n é</p>
+                        \[ B_n(t) = \sum_{j=0}^{n} \space P_j \space {n \choose j} \space t^j \space (1-t)^{n-j}
+                                = \sum_{j=0}^{n} \space P_j \space \mathbb{\beta_{\space j , \space n}} \]
+                    <p>onde \(P_i\) representa o i-ésimo ponto de controle. São a partir dos pontos de controle 
+                        que obtemos a curva e, para uma curva de Bézier de grau k, devemos ter k+1 pontos de controle.</p>
+                    <p>A seguir representamos a forma analítica de curvas de Bezier, sejam \(P_1,P_2,P_3,P_4,P_5\) , pontos 
+                        quaisquers, diferentes dois a dois.</p>
+                    <p>B&eacute;zier de grau 1: \( B_n(t) = (1-t) \space P_1 + t \space P_2 \)</p>
+                        <svg width=400 height=200 style="border: 1px solid black;">
+                            <line x1=80 y1=160 x2=320 y2=40 stroke="Black" stroke-width="5"></line>
+                            <circle r="4" cx=80 cy=160 fill="Red"></circle>
+                            <text x="70" y="150"> P1 </text>
+                            <circle r="4" cx=320 cy=40 fill="Red"></circle>
+                            <text x="330" y="50"> P2 </text>
+                        </svg>
+                    <p>B&eacute;zier de grau 2: \( B_n(t) = (1-t)^2 \space P_1 + 2 \space (1-t) \cdot t \space  P_2 + t^2 \space  P_3 \)</p>
+                        <svg width=400 height=200 style="border: 1px solid black;">
+                            <path d="M 80 160 Q  200 60 320 140" stroke="Black" stroke-width="5" fill="none"/>
+                            <circle r="4" cx=80 cy=160 fill="Red"></circle>
+                            <text x="70" y="150"> P1 </text>
+                            <circle r="4" cx=200 cy=60 fill="Red"></circle>
+                            <text x="180" y="50"> P2 </text>
+                            <circle r="4" cx=320 cy=140 fill="Red"></circle>
+                            <text x="330" y="150"> P3 </text>
+                        </svg>
+                    <p>B&eacute;zier de grau 3: \( B_n(t) = (1-t)^3 \space P_1 + 3 \space (1-t)^2 \space t \space P_2 + 3 \space (1-t) \space t^2 \space P_3  + t^3 \space P_4   \)</p>
+                        <svg width=400 height=200 style="border: 1px solid black;">
+                            <path d="M 80 160 C  200 60 280 160 320 40" stroke="Black" stroke-width="5" fill="none"/>
+                            <circle r="4" cx=80 cy=160 fill="Red"></circle>
+                            <text x="70" y="150"> P1 </text>
+                            <circle r="4" cx=200 cy=60 fill="Red"></circle>
+                            <text x="180" y="50"> P2 </text>
+                            <circle r="4" cx=280 cy=160 fill="Red"></circle>
+                            <text x="290" y="170"> P3 </text>
+                            <circle r="4" cx=320 cy=40 fill="Red"></circle>
+                            <text x="330" y="50"> P4 </text>
+                        </svg>
+                    <p>B&eacute;zier de grau 4: \( B_n(t) = (1-t)^4 \space P_1 + 4 \space (1-t)^3 \space t \space P_2 + 6 \space (1-t)^2 \space t^2 \space P_3 + 4 \space (1-t) \space t^3 \space P_4 + t^4 \space  P_5\)</p>
+                        <svg width="400" height="200" style="border: 1px solid black;">
+                            <circle r="2.4" cx="40" cy="181.1250457763672" fill="Black"></circle>
+                            <circle r="2.4" cx="39.789759259259256" cy="174.53535688747832" fill="Black"></circle>
+                            <line x1="40" y1="181.1250457763672" x2="39.789759259259256" y2="174.53535688747832" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="41.79644444444445" cy="168.78513466525612" fill="Black"></circle>
+                            <line x1="39.789759259259256" y1="174.53535688747832" x2="41.79644444444445" y2="168.78513466525612" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="45.602500000000006" cy="163.7122457763672" fill="Black"></circle>
+                            <line x1="41.79644444444445" y1="168.78513466525612" x2="45.602500000000006" y2="163.7122457763672" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="50.82548148148149" cy="159.1673568874783" fill="Black"></circle>
+                            <line x1="45.602500000000006" y1="163.7122457763672" x2="50.82548148148149" y2="159.1673568874783" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="57.11805555555556" cy="155.01393466525607" fill="Black"></circle>
+                            <line x1="50.82548148148149" y1="159.1673568874783" x2="57.11805555555556" y2="155.01393466525607" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="64.168" cy="151.12824577636724" fill="Black"></circle>
+                            <line x1="57.11805555555556" y1="155.01393466525607" x2="64.168" y2="151.12824577636724" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="71.69820370370371" cy="147.39935688747832" fill="Black"></circle>
+                            <line x1="64.168" y1="151.12824577636724" x2="71.69820370370371" y2="147.39935688747832" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="79.46666666666668" cy="143.72913466525614" fill="Black"></circle>
+                            <line x1="71.69820370370371" y1="147.39935688747832" x2="79.46666666666668" y2="143.72913466525614" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="87.26649999999998" cy="140.03224577636715" fill="Black"></circle>
+                            <line x1="79.46666666666668" y1="143.72913466525614" x2="87.26649999999998" y2="140.03224577636715" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="94.92592592592594" cy="136.23615688747833" fill="Black"></circle>
+                            <line x1="87.26649999999998" y1="140.03224577636715" x2="94.92592592592594" y2="136.23615688747833" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="102.30827777777775" cy="132.28113466525605" fill="Black"></circle>
+                            <line x1="94.92592592592594" y1="136.23615688747833" x2="102.30827777777775" y2="132.28113466525605" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="109.312" cy="128.1202457763672" fill="Black"></circle>
+                            <line x1="102.30827777777775" y1="132.28113466525605" x2="109.312" y2="128.1202457763672" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="115.87064814814812" cy="123.71935688747826" fill="Black"></circle>
+                            <line x1="109.312" y1="128.1202457763672" x2="115.87064814814812" y2="123.71935688747826" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="121.95288888888892" cy="119.05713466525611" fill="Black"></circle>
+                            <line x1="115.87064814814812" y1="123.71935688747826" x2="121.95288888888892" y2="119.05713466525611" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="127.56249999999997" cy="114.12504577636716" fill="Black"></circle>
+                            <line x1="121.95288888888892" y1="119.05713466525611" x2="127.56249999999997" y2="114.12504577636716" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="132.73837037037035" cy="108.92735688747831" fill="Black"></circle>
+                            <line x1="127.56249999999997" y1="114.12504577636716" x2="132.73837037037035" y2="108.92735688747831" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="137.5545" cy="103.48113466525606" fill="Black"></circle>
+                            <line x1="132.73837037037035" y1="108.92735688747831" x2="137.5545" y2="103.48113466525606" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="142.12000000000003" cy="97.8162457763672" fill="Black"></circle>
+                            <line x1="137.5545" y1="103.48113466525606" x2="142.12000000000003" y2="97.8162457763672" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="146.5790925925926" cy="91.97535688747831" fill="Black"></circle>
+                            <line x1="142.12000000000003" y1="97.8162457763672" x2="146.5790925925926" y2="91.97535688747831" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="151.1111111111111" cy="86.01393466525607" fill="Black"></circle>
+                            <line x1="146.5790925925926" y1="91.97535688747831" x2="151.1111111111111" y2="86.01393466525607" stroke="Black" stroke-width="5"></line>
+                            <circle r="2.4" cx="155.9305" cy="80.0002457763672" fill="Black"></circle>
+                            <line x1="151.1111111111111" y1="86.01393466525607" x2="155.9305" y2="80.0002457763672" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="161.28681481481482" cy="74.0153568874783" fill="Black"></circle>
+                            <line x1="155.9305" y1="80.0002457763672" x2="161.28681481481482" y2="74.0153568874783" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="167.46472222222224" cy="68.15313466525609" fill="Black"></circle>
+                            <line x1="161.28681481481482" y1="74.0153568874783" x2="167.46472222222224" y2="68.15313466525609" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="174.784" cy="62.5202457763672" fill="Black"></circle>
+                            <line x1="167.46472222222224" y1="68.15313466525609" x2="174.784" y2="62.5202457763672" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="183.599537037037" cy="57.236156887478316" fill="Black"></circle>
+                            <line x1="174.784" y1="62.5202457763672" x2="183.599537037037" y2="57.236156887478316" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="194.3013333333333" cy="52.43313466525609" fill="Black"></circle>
+                            <line x1="183.599537037037" y1="57.236156887478316" x2="194.3013333333333" y2="52.43313466525609" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="207.31449999999995" cy="48.256245776367194" fill="Black"></circle>
+                            <line  x1="194.3013333333333" y1="52.43313466525609" x2="207.31449999999995" y2="48.256245776367194" stroke="Black" stroke-width="5" ></line>
+                            <circle class="static" r="2.4" cx="223.0992592592592" cy="44.863356887478304" fill="Black"></circle>
+                            <line x1="207.31449999999995" y1="48.256245776367194" x2="223.0992592592592" y2="44.863356887478304" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="242.1509444444444" cy="42.42513466525609" fill="Black"></circle>
+                            <line x1="223.0992592592592" y1="44.863356887478304" x2="242.1509444444444" y2="42.42513466525609" stroke="Black" stroke-width="5" ></line>
+                            <circle r="2.4" cx="264.99999999999994" cy="41.12504577636719" fill="Black"></circle>
+                            <line x1="242.1509444444444" y1="42.42513466525609" x2="264.99999999999994" y2="41.12504577636719" stroke="Black" stroke-width="5" ></line>
+                            <circle r="4" cx="40" cy="181.1250457763672" fill="Red"></circle>
+                            <text x="20" y="195"> P1 </text>
+                            <circle r="4" cx="29" cy="128.1250457763672" fill="Red"></circle>
+                            <text x="30" y="120"> P2 </text>
+                            <circle r="4" cx="218" cy="151.1250457763672" fill="Red"></circle>
+                            <text x="230" y="160"> P3 </text>
+                            <circle r="4" cx="78" cy="46.12504577636719" fill="Red"></circle>
+                            <text x="88" y="46"> P4 </text>
+                            <circle r="4" cx="265" cy="41.12504577636719" fill="Red"></circle>
+                            <text x="285" y="50"> P5 </text>
+                        </svg>
+                </div>
+                
+                <div id="secoes">
+                    <h2>B&eacute;zier Anal&iacute;tica</h2>
+                </div>
+
+                <div id="textos">
+                    <p> Abaixo pode-se desenhar uma B&eacute;zier escolhendo os pontos de controle e esta será determinada
+                        anal&iacute;ticamente.</p>
+                </div>
+            </div>
+
+            <div>
+                <div id="botoes">
+                    <button id="animacao_svg2">Anima&ccedil;&atilde;o</button>
+                    <button id="control_svg2">Pontos de Controle</button>
+                    <button id="definition_svg2">Definição</button>
+                    <button id="move_svg2">Mover</button>
+                    <button id="clear_svg2">Clear</button>
+                    Pontos: <input type="number" id="pontos2_input"></input>
+                    <button id="aplicar_svg2">Aplicar</button>
+                </div>
+
+                <svg id="svg2" width="1000" height="500" style="border: 1px solid black;"></svg>
+            </div>	
+
+            <div id="secoes">
+                <h2>Algoritmo de Castelju</h2>
+            </div>
+
+            <div id="textos">
+                <p> O algoritmo de Castelju, foi desenvolvido pelo matemático Paul Castelju, por volta de 1959, enquanto trabalhava na
+                    Citroen. É um algoritmo recursivo, que permite construir uma curva de Bézier de grau \(k-1\) a partir de duas de grau
+                    \(k\), \(k\ge2\).</p>
+                <p>Para entender como o algoritmo constroe a curva, suponhamos que tenhamos passado 2 pontos de controle (\(P_0^0\) e \(P_1^0\)), assim a equação temos que:</p>
+                    
+                \[P_0^1 = B_1(t) = (1-t) \space P_0^0 + t \space P_1^0 
+                \space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (1)\]
+                
+                <p>Agora assuma que coloquemos mais um ponto de controle, \(P_2^0\) e, criemos o ponto \(P_1^1\) que é a interpolação linear de \(P_1^0\)
+                    e \(P_2^0\), além de um \(P_0^2\) que seia interpolação de \(P_0^1\) e \(P_1^1\), ou seja,</p>
+   
+                    \[P_1^1 = B_1(t) = (1-t) \space P_1^0 + t \space P_2^0 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (2)\]
+      
+                    \[P_0^2 = B_1(t) = (1-t) \space P_0^1 + t \space P_1^1 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (3)\]
+
+                <p>Como podemos ver, se substituirmos \((1)\) e \((2)\) em \((3)\) teremos uma Bézier de grau 2:</p>
+      
+                    \[P_0^2 = B_2(t) = (1-t) \space [\space (1-t) \space P_0^0 + t \space P_1^0 \space] + t \space [\space(1-t) \space P_1^0 + t \space P_2^0 \space] \]
+      
+                    \[ \space  \space  \space  \space  \space  \space  \space  \space  \space  \space
+                    = \space (1-t)^2 \space P_0^0 + 2 \space (1-t) \space t \space P_1^0 + t^2 \space P_2^0 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (4)\]
+            
+                <p> Se criarmos um quarto ponto de controle (\(P_3^0\)), podemos definir  \(P_2^1\) como interpolação linear de \(P_2^0\) e 
+                    \(P_3^0\), \(P_1^2\) também como interpolação linear de \(P_1^1\) e \(P_2^1\), por fim definimos \(P_0^3\) que será formado a partir
+                    de \(P_0^2\) e \(P_1^2\), isto é,</p>
+
+                    \[P_2^1 = B_1(t) = (1-t) \space P_2^0 + t \space P_3^0 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (5)\]
+
+                    \[P_1^2 = B_1(t) = (1-t) \space P_1^1 + t \space P_2^1 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (6)\]
+
+                    \[P_0^3 = B_1(t) = (1-t) \space P_0^2 + t \space P_1^2 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                    \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (7)\]
+
+                <p>Substituindo \((2)\) e \((5)\) em \(6\)</p>
+
+                \[P_1^2 = B_2(t) = (1-t) \space [\space (1-t) \space P_1^0 + t \space P_2^0 \space ]+ t \space [ \space(1-t) \space P_2^0 + t \space P_3^0 \space]\]
+                \[\space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                = \space (1-t)^2 \space  P_1^0 + 2 \space (1-t) \space t \space P_2^0 + t^2 \space P_3^0
+                \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (8)\]
+
+                <p>Substituindo \((4)\) e \((8)\) em \((7)\) teremos uma Bézier de grau 3:</p>
+
+                \[P_0^3 = B_3(t) = (1-t) \space [\space (1-t)^2 \space P_0^0 + 2 \space (1-t) \space t \space P_1^0 + t^2 \space P_2^0 
+                \space ]+ t \space [ \space (1-t)^2 \space  P_1^0 + 2 \space (1-t) \space t \space P_2^0 + t^2 \space P_3^0
+                \space] \]
+    
+                \[\space  \space  \space  \space  \space  \space  \space  \space  \space  \space 
+                = \space (1-t)^3 \space  P_0^0 + 3 \space (1-t)^2 \space t \space P_1^0 + 3 \space (1-t) \space t^2 \space P_2^0 + t^3 \space P_3^0
+                \space  \space  \space  \space  \space  \space  \space  \space  \space  \space (9)\]
+                    
+                <p>De um modo geral, dado uma Bézier de grau n, podemos escrever o ponto \(P_i^j\), onde \(j=1, . . . ,n\) e\(i=1,...,n-j\), como: </p>
+    
+                \[P_i^j=(1-t) \space P_i^{j-1} + t \space P_{i+1}^{j-1}\] 
+    
+                <p>onde t pertence ao intervalo [0,1].</p>
+				<p> Vale ressaltar que o algoritmo de Castelju nos fornece uma estabilidade númerica maior que o método anterior.</p>
+                <p> A seguir segue-se um espaço para construir curvas de Bézier passando-se os pontos de controle, com base no algoritmo de 
+                    Casteljau. </p>
+            </div>
+            
+            <div>
+                <div id="botoes">
+                    <button id="animacao_svg1">Anima&ccedil;&atilde;o</button>
+                    <button id="detalhes_svg1">Detalhes</button>
+                    <button id="control_svg1">Pontos de Controle</button>
+                    <button id="definition_svg1">Definição</button>
+                    <button id="move_svg1">Mover</button>
+                    <button id="clear_svg1">Clear</button>
+                    Pontos: <input type="number" id="pontos1_input"></input>
+                    <button id="aplicar_svg1">Aplicar</button>
+                </div>
+                <svg id="svg1" width="1000" height="500"style="border: 1px solid black;"></svg>  
+            </div>
+            <p>Abaixo estamos implementando o algoritmo de Castelju que constroi uma curva através da
+                divisão de uma curva de Bézier recursivamente, para tanto, fixamos \(t=1/2\) e calculamos o ponto da curva, logo após isso
+                temos duas curvas, uma formada pelo ponto de controle inicial e este ponto que acabamos de encontrar e, 
+                este último com o ponto de controle final, assim, calculamos os pontos da curva de Bézier principal dada pelas duas geradas fazendo \(t=1/2\) e, se desejarmos, aplicamos a recursão novamente.       
+            
+			<div>
+                <div id="botoes">
+                    <button id="control_svg3">Pontos de Controle</button>
+                    <button id="move_svg3">Mover</button>
+                    <button id="clear_svg3">Clear</button>
+                    Recursão: <input type="number" id="pontos3_input"></input>
+                    <button id="aplicar_svg3">Aplicar</button>
+                </div>
+                            <svg id="svg3" width="1000" height="500"style="border: 1px solid black;"></svg>  
+            </div>
+            <div id="secoes">
+                    <h2>Resultados e conclusões</h2>
+                    <p>Testamos o tempo que os dois algoritmos (analítico e o de Castelju, a primeira versão) demoram para desenhar uma curva em função do número de pontos
+                    de controle.</p>
+					<p><img src="resultados.png" width="60%"  ><p>
+                    <p>Como pode ser observado acima enquanto o analítico cresce de forma praticamente linear, o Castelju cresce lembrando uma forma quadrática.
+                    Assim, quando se necessita de velocidade e o número de pontos de controle é grande, o algoritmo de Castelju deixa a desejar.
+                    Da forma recursiva como implementamos ele, quando é dado 22 ou 23 pontos de controle, atingimos o limite máximo de recursão que é suportado.
+                    Já a analítica consegue suportar até 160 pontos de controle.</p>
+                    <p>Futuros trabalhos podem ser melhorar o algoritmo de Castelju para que ele consiga suportar um número maior de 
+                    recursões. E, realizar mais amostragem, testando uma quantidade maior de pontos de controle, para determinar de forma mais precisa o 
+					tempo que cada método demora para desenhar a curva em função da quantidade de pontos de controle.</p>
+            </div>
+
+            <div id="secoes">
+                <h2>Referências </h2>
+            </div>
+            
+            <div id="textos">
+				<p>[1] Sederberg, Thomas W., "Computer Aided Geometric Design" (2012).All Faculty Publications. 1.
+			    	<a href="https://scholarsarchive.byu.edu/facpub/1">https://scholarsarchive.byu.edu/facpub/1</a></p>
+				<p>[2] MEDEIROS, Heloisa B.; MENEZES, M. Lucia. Aproximação de funções: polinômios de Bernstein. 20 jun. 2011. 
+				    Disponível em: <a href="http://klein.sbm.org.br/wp-content/uploads/sites/17/2016/02/Aproximac%CC%A7a%CC%83o-de-Func%CC%A7o%CC%83es.pdf">
+				    http://klein.sbm.org.br/wp-content/uploads/sites/17/2016/02/Aproximac%CC%A7a%CC%83o-de-Func%CC%A7o%CC%83es.pdf</a>. 
+				    Acesso em: 31 out. 2019.</p>		
+				<p>[3] HAN, Xi-An; MA, YiChen; HUANG, XiLi. The cubic trigonometric Bézier curve with two shape parameters. 
+				    Applied Mathematics Letters, [s. l.], v. 22, ed. 2, p. 226-231, Fevereiro 2009. 
+				    Disponível em: <a href="https://doi.org/10.1016/j.aml.2008.03.015">https://doi.org/10.1016/j.aml.2008.03.015</a>. 
+				    Acesso em: 31 out. 2019.</p>
+				<p>[4] BUCKLER, Craig. How to Translate from DOM to SVG Coordinates and Back Again. [S. l.], 31 ago. 2016. 
+				    Disponível em: <a href="https://www.sitepoint.com/how-to-translate-from-dom-to-svg-coordinates-and-back-again/" >
+				    https://www.sitepoint.com/how-to-translate-from-dom-to-svg-coordinates-and-back-again/ </a>.
+				    Acesso em: 31 out. 2019.</p>
+				<p>[5] COLLINGRIDGE, Peter. Interactive SVGs: Draggable SVG elements. [S. l.], 3 abr. 2018. 
+				    Disponível em: <a href="http://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/">
+				    http://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/ </a>. 
+				    Acesso em: 31 out. 2019.</p>
+				<p>[6] MOVER objetos SVG. Stack Overflow, 11 mar. 2015. 
+				    Disponível em: <a href="https://pt.stackoverflow.com/questions/53908/mover-objetos-svg">
+				    https://pt.stackoverflow.com/questions/53908/mover-objetos-svg</a>.
+				    Acesso em: 31 out. 2019.</p>
+				<p>[7] MOVER objetos SVG gráfico. Stack Overflow, 26 nov. 2014. 
+			    	Disponível em: <a href="https://pt.stackoverflow.com/questions/40720/mover-objetos-svg-gráfico">
+				    https://pt.stackoverflow.com/questions/40720/mover-objetos-svg-gráfico </a>. 
+				    Acesso em: 31 out. 2019.</p>									
+			</div>
+        </div>
+
+        <script type="text/javascript" src="script0.js"></script>
+
+        <script type="text/javascript" src="script1.js"></script>
+
+        <script type="text/javascript" src="script2.js"></script>
+
+		<script type="text/javascript" src="script3.js"></script>		
+        
+    </body>
+
+</html>

@@ -1,0 +1,68 @@
+body {
+	background-color: rgb(230, 230, 230);
+}
+
+#botoes{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    border: 1px solid black; 
+    text-align:center;
+}
+
+button {
+    margin: 10px 10px 10px 10px;
+    border: 1px solid black;
+
+}
+
+#geral {
+    background-color: rgb(230, 230, 230);
+    /*border: 1px solid black;*/
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+svg {
+    margin: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(245, 245, 245);
+}
+
+#cabecalho{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#secoes {
+    margin: 40px 0 0 0;
+    text-indent: 4em;
+}
+
+p {
+    text-indent: 4em;
+    text-align:justify;
+    padding:0 50px 0 50px;
+}
+ 
+.draggable {
+    cursor: move;
+}
+
+input {
+    margin: 10px 10px 10px 2px;
+    border: 1px solid black;
+    width: 60px;
+}
