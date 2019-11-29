@@ -1,0 +1,37 @@
+body {
+	background-color: rgb(230, 230, 230);
+}
+
+#geral {
+    background-color: rgb(230, 230, 230);
+    /*border: 1px solid black;*/
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#cabecalho{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#secoes {
+    margin: 40px 0 0 0;
+    text-indent: 4em;
+}
+
+p,li {
+    text-indent: 4em;
+    text-align:justify;
+    padding:0 50px 0 50px;
+}
+
+canvas{
+	margin: 40px 40px 40px 40px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

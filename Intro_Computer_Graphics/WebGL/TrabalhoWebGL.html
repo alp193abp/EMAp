@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Trabalho - WebGL</title>
+
+        <!-- Meu CSS -->
+        <link rel="stylesheet" href="styleWebGL.css">
+
+        <!-- MathJax -->
+        <script type="text/javascript" async
+                src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async>
+        </script>
+       
+        <!-- glMatrix -->
+        <script type="text/javascript" src="http://vision.ime.usp.br/~acmt/hakyll/webgl/glMatrix-0.9.5.min.js"> </script>
+
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+        <!-- webgl-utils -->
+        <script type="text/javascript" src="http://vision.ime.usp.br/~acmt/hakyll/webgl/webgl-utils.js"></script>
+
+        <script id="shader-vs" type="x-shader/x-vertex">
+            attribute vec3 aVertexPosition;
+            attribute vec4 aVertexColor;
+
+            uniform mat4 uMMatrix;
+            uniform mat4 uVMatrix;
+            uniform mat4 uPMatrix;
+            
+            varying vec4 vColor;
+
+            void main (void) {
+                gl_Position = uPMatrix * uVMatrix * uMMatrix * vec4(aVertexPosition, 1.0);
+                vColor = aVertexColor;
+            }
+        </script>
+
+        <script id="shader-fs" type="x-shader/x-fragment">
+            precision mediump float;
+            varying vec4 vColor;
+
+            void main (void) {
+                gl_FragColor = vColor;
+            }
+        </script>
+
+        <script type="text/javascript" src="script.js"></script>	   
+    </head>
+
+    <body>
+        <div id="geral">
+                <div id="cabecalho">
+                    <h1>Introdução à Computa&ccedil;&atilde;o Gr&aacute;fica</h1>
+                    <h2>Hello World - WebGL</h2>
+                    <h3>Aluno: At&iacute;lio Leit&atilde;o Pellegrino</h3>
+                </div>
+        
+                <div id="textos">
+                <p> Foi utilizado como base, para fazer este "Hello World" de WebGL, um tutorial criado por Anderson Tavares, que pode ser acessado atráves deste 
+                    <a href="http://vision.ime.usp.br/~acmt/hakyll/posts/2014-02-26-webgl-criando-triangulo.html">link</a>.
+                </p>
+
+                <canvas id="canvasWebGL1" width="900px" height="600px"></canvas>
+
+                    <p>A rotação em torno de cada eixo e a distância do objeto a câmera (com relação ao eixo Z) podem ser alteradas através dos seguintes comandos:</p>
+            
+                </div>
+                <div id="secoes">
+                    <h4>Rotação em torno do Eixo X</h4>
+                </div>
+
+                <li>Para aumentar a rotação no sentido anti-horário (regra da mão direita), aperte a tecla: <b>1</b></li>
+                <li>Para reduzi-la, pressione: <b>2</b></li>
+
+                <div id="secoes">
+                        <h4>Rotação em torno do Eixo Y</h4>
+                </div>
+    
+                <li>Para aumentar a rotação no sentido anti-horário (regra da mão direita), aperte a tecla: <b>4</b></li>
+                <li>Para reduzi-la, pressione: <b>5</b></li>
+                    
+                <div id="secoes">
+                        <h4>Rotação em torno do Eixo Z</h4>
+                    </div>
+    
+                <li>Para aumentar a rotação no sentido anti-horário (regra da mão direita), aperte a tecla: <b>7</b></li>
+                <li>Para reduzi-la, pressione: <b>8</b></li>
+
+                <div id="secoes">
+                        <h4>"Zoom"</h4>
+                    </div>
+                    <p>Este efeito dá a sensação de que estamos dando um zoom, no objeto. Mas na verdade o que está acontecendo é que estamos mudando  a posição do 
+                        objeto, esta alteração é feita a partir de uma translação. E estamos alterando apenas a coordenada Z. 
+                    </p>
+                <li>Para aumentar aproximar o objeto, aperte a tecla: <b>+</b> ou <b>a</b></li>
+                <li>Para afasta-lo, pressione: <b>-</b> ou <b>s</b></li>
+        </div>
+        
+    </body>
+
+    
+</html>
